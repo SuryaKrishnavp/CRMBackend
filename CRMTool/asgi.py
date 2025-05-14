@@ -7,7 +7,7 @@ from channels.auth import AuthMiddlewareStack
 
 import leads_section.routing
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "devlok_crm.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CRMTool.settings")
 django.setup()
 
 application = ProtocolTypeRouter(

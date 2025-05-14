@@ -2,9 +2,9 @@ import os
 from celery import Celery
 
 # Set the default Django settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'devlok_crm.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CRMTool.settings')
 
-app = Celery('devlok_crm')
+app = Celery('CRMTool')
 
 # Load task modules from all registered Django app configs
 app.config_from_object('django.conf:settings', namespace='CELERY')
