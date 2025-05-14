@@ -1,0 +1,50 @@
+from django.urls import path
+from .views import (get_lead_data,store_data_into_db,
+                    update_databank,delete_databank,view_databank_data,
+                    search_databank,filter_data_banks,match_property,
+                    lead_into_databank,databank_graph,Buy_databank,Sell_databank,ForRent_databank,
+                    RentSeeker_databank,SalesM_Buy_databank,SalesM_Sell_databank,SalesM_ForRent_databank,
+                    SalesM_RentSeeker_databank,single_databank,add_image_databank,view_images_databank,delete_image,
+                    salesmanager_databank_graph,salesmanager_search_databank,lead_into_databank_salesmanager,admin_single_databank,
+                    admin_view_images_databank,lead_into_databank_admin,Databank_List_admin,send_matching_pdf,databank_suggestions,
+                    autocomplete_databank,autocomplete_databank_salesmanager,Databank)
+
+
+urlpatterns = [
+    path("datacollection/<int:lead_id>/", store_data_into_db , name="store_data_into_db"),
+    path('get_lead_data/<int:lead_id>/',get_lead_data,name="get_lead_data"),
+    path('editdata_Databank/<int:databank_id>/',update_databank,name="updatedatabank"),
+    path('delete_databank_entry/<int:databank_id>/',delete_databank,name="delete_databank"),
+    path('view_my_datacollection/',view_databank_data,name="viewdatacollection"),
+    path('search_in_databank/',search_databank,name="search_databank"),
+    path('filter/',filter_data_banks,name="filter_databanks"),
+    path('match_property/<int:property_id>/', match_property, name='match_properties'),
+    path('databank_from_lead/<int:lead_id>/',lead_into_databank,name="lead_into_databank"),
+    path('databank_graph/',databank_graph,name="databank_graph"),
+    path('databank_buy/',Buy_databank,name="buy_databank"),
+    path('sell_databank/',Sell_databank,name="sell_databank"),
+    path('forrent_databank/',ForRent_databank,name="forrent_databank"),
+    path('rental_seeker/',RentSeeker_databank,name="rental_seeker"),
+    path('salesmanager_buy_data/',SalesM_Buy_databank,name="salesmanager_buy_data"),
+    path('salesmanager_sell_databank/',SalesM_Sell_databank,name="salesmanager_sell"),
+    path('salesmanager_forrent_databank/',SalesM_ForRent_databank,name="salesmanager_forrent"),
+    path('salesmanager_rentseeker/',SalesM_RentSeeker_databank,name="salesmanger_rentseeker"),
+    path('single_databank/<int:databank_id>/',single_databank,name="single_databank"),
+    path('add_image_into_db/<int:databank_id>/',add_image_databank,name="image_add"),
+    path('view_images/<int:databank_id>/',view_images_databank,name="view_images"),
+    path('delete_image/<int:databank_id>/<int:image_id>/',delete_image,name="delete_image"),
+    path('salesmanager_databank_graph/',salesmanager_databank_graph,name="salesmanager_databank_graph"),
+    path('search_by_salesmanager/',salesmanager_search_databank,name="salesmanager_search"),
+    path('lead_into_db_sales/<int:lead_id>/',lead_into_databank_salesmanager,name='lead_into_db_sales'),
+    path('admin_single_databank/<int:databank_id>/',admin_single_databank,name="admin_single_databank"),
+    path('admin_view_images/<int:databank_id>/',admin_view_images_databank,name="admin_view_images"),
+    path('lead_into_db_admin/<int:lead_id>/',lead_into_databank_admin,name="lead_into_db"),
+    path('databank_project_list/',Databank_List_admin,name="databank_project_listing"),
+    path('send_matching_pdf/<int:property_id>/',send_matching_pdf,name="sendmatchingpdf"),
+    path("suggestions_admin/", databank_suggestions, name="databank_suggestions"),
+    path("auto_complete_search_admin/",autocomplete_databank,name="autocomplete"),
+    path("salesMSearchAutoComplete/",autocomplete_databank_salesmanager,name="salesMAutoComplete"),
+    path("databank_list/",Databank,name="databank")
+
+    
+]
