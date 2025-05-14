@@ -12,7 +12,6 @@ DEBUG = True
 ALLOWED_HOSTS = ["crmbussinesstool.up.railway.app","bussinesstoolcrm.up.railway.app"]  # Set specific Railway domain in production for security
 
 DATABASES_URL = "postgresql://postgres:KJsFPonSukFNLOHNafzGZTFyaVMdjqwH@switchback.proxy.rlwy.net:54684/railway"
-
 # Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
