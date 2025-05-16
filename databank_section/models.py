@@ -24,7 +24,7 @@ class DataBank(models.Model):
     demand_price = models.IntegerField()
     location_proposal_district = models.CharField(max_length=150,null=True,blank=True)
     location_proposal_place = models.CharField(max_length=150,null=True,blank=True)
-    area_in_sqft = models.CharField(max_length=100)
+    area_in_sqft = models.CharField(max_length=100,null=True,blank=True)
     building_roof = models.CharField(max_length=100,null=True,blank=True)
     number_of_floors = models.IntegerField(null=True,blank=True)
     building_bhk = models.IntegerField(null=True,blank=True)

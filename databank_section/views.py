@@ -560,8 +560,8 @@ def send_matching_pdf(request, property_id):
         opposite_purpose_map = {
             "For Selling a Property": "For Buying a Property",
             "For Buying a Property": "For Selling a Property",
-            "For Rental or Lease": "Looking to rent or Lease a Property",
-            "Looking to rent or Lease Property": "For Rental or Lease",
+            "For Rental or Lease": "Looking to Rent or Lease a Property",
+            "Looking to Rent or Lease Property": "For Rental or Lease",
         }
         opposite_purpose = opposite_purpose_map.get(new_property.purpose, None)
 
@@ -577,7 +577,7 @@ def send_matching_pdf(request, property_id):
             )
 
         new_coords = get_coordinates(
-            new_property.location_proposal_place if new_property.purpose in ["buy", "rental seeker"]
+            new_property.location_proposal_place if new_property.purpose in ["For Buying a Property", "Looking to Rent or Lease Property"]
             else new_property.place
         )
 
@@ -589,7 +589,7 @@ def send_matching_pdf(request, property_id):
                 score += 4
 
             # District and Place match
-            if new_property.purpose in ["buy", "rental seeker"]:
+            if new_property.purpose in ["For Buying a Property", "Looking to Rent or Lease Property"]:
                 if match.district == new_property.location_proposal_district:
                     score += 3
                 if match.place and new_property.location_proposal_place and match.place.lower() == new_property.location_proposal_place.lower():
@@ -714,41 +714,7 @@ def send_matching_pdf(request, property_id):
             <b>Additional Notes:</b> {prop.additional_note or 'None'}
             """
             content.append(Paragraph(details, normal_style))
-            content.append(Spacer(1, 6))
-
-            # Add property images (up to 2 images per property)
-            for img_obj in prop.images.all():
-                try:
-                    # Get the image URL
-                    image_url = f"https://bussinesstoolcrm.up.railway.app{img_obj.image.url}"
-                    response = requests.get(image_url)
-
-                    if response.status_code == 200:
-                        # Load image content into a BytesIO buffer
-                        img_data = BytesIO(response.content)
-
-                        # Open image using PIL to check for rotation and fix it if necessary
-                        pil_img = PILImage.open(img_data)
-
-                        # Correct the image orientation (rotate if necessary)
-                        pil_img = pil_img.rotate(0, expand=True)  # Change angle if needed
-
-                        # Save the corrected image back into a BytesIO buffer
-                        img_corrected_data = BytesIO()
-                        pil_img.save(img_corrected_data, format='JPEG')
-                        img_corrected_data.seek(0)  # Rewind buffer to start
-
-                        # Use the corrected image for the PDF
-                        img = RLImage(img_corrected_data, width=5 * inch, height=3 * inch)
-                        img.hAlign = 'LEFT'
-
-                        # Append image to the PDF content
-                        content.append(img)
-                        content.append(Spacer(1, 6))
-                    else:
-                        print(f"Failed to load image: {image_url} (status code: {response.status_code})")
-                except Exception as e:
-                    print(f"Image loading error: {e}")
+            content.append(Spacer(1, 6))            
 
             content.append(Spacer(1, 12))
             content.append(Table([[" " * 150]], style=[("LINEBELOW", (0, 0), (-1, -1), 0.5, colors.grey)]))
@@ -808,8 +774,8 @@ def match_property(request, property_id):
         opposite_purpose_map = {
             "For Selling a Property": "For Buying a Property",
             "For Buying a Property": "For Selling a Property",
-            "For Rental or Lease": "Looking to rent or Lease a Property",
-            "Looking to rent or Lease Property": "For Rental or Lease",
+            "For Rental or Lease": "Looking to Rent or Lease a Property",
+            "Looking to Rent or Lease Property": "For Rental or Lease",
         }
         opposite_purpose = opposite_purpose_map.get(new_property.purpose, None)
 
@@ -825,7 +791,7 @@ def match_property(request, property_id):
             )
 
         new_coords = get_coordinates(
-            new_property.location_proposal_place if new_property.purpose in ["buy", "rental seeker"]
+            new_property.location_proposal_place if new_property.purpose in ["For Buying a Property", "Looking to Rent or Lease Property"]
             else new_property.place
         )
 
@@ -837,7 +803,7 @@ def match_property(request, property_id):
                 score += 4
 
             # District and Place match
-            if new_property.purpose in ["buy", "rental seeker"]:
+            if new_property.purpose in ["For Buying a Property", "Looking to Rent or Lease Property"]:
                 if match.district == new_property.location_proposal_district:
                     score += 3
                 if match.place and new_property.location_proposal_place and match.place.lower() == new_property.location_proposal_place.lower():
