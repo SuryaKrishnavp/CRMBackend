@@ -163,14 +163,14 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "https://bussinesstoolcrm.up.railway.app",
     "https://crmbussinesstool.up.railway.app",
-    "https://bussinesstoolcrm.up.railway.app"
     
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    "https://bussinesstoolcrm.up.railway.app",
     "https://crmbussinesstool.up.railway.app",
-    "https://bussinesstoolcrm.up.railway.app"
     
 ]
 
