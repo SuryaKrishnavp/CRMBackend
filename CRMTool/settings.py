@@ -35,9 +35,9 @@ INSTALLED_APPS = [
 
 # Middleware
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -166,6 +166,9 @@ CORS_ALLOWED_ORIGINS = [
     "https://bussinesstoolcrm.up.railway.app",
     "https://crmbussinesstool.up.railway.app",
     
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https:\/\/.*\.up\.railway\.app$",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
