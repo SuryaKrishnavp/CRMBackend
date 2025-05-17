@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from .models import DataBank,DataBankImage
 
-class DatabankSerializer(serializers.ModelSerializer):
+class DataBankSerializer(serializers.ModelSerializer):
     class Meta:
         model = DataBank
-        exclude = ['lead','follower']  # This removes 'lead' from required fields
+        fields = '__all__'
 
     
     

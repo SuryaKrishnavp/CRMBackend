@@ -6,7 +6,7 @@ from leads_section.models import Leads,LeadCategory
 from rest_framework.response import Response
 from .serializers import DatabankSerializer,DataBankEditSerializer,DataBankGETSerializer,DataBankImageSerializer
 from rest_framework import status
-from .models import DataBank,DataBankImage
+from .models import DataBank,DataBankImage,LeadDataFollower
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny
@@ -76,33 +76,29 @@ def get_lead_data(request, lead_id):
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated, IsSalesManagerUser])
-def store_data_into_db(request, lead_id):
+def store_data_into_db(request):
     user = request.user
     sales_manager = Sales_manager_reg.objects.filter(user=user.id).first()
 
     if not sales_manager:
         return Response({"error": "Sales Manager not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    lead = get_object_or_404(Leads, id=lead_id)
-    if lead.staff_id != sales_manager.id:
-        return Response({"error": "Sales Manager mismatch"}, status=status.HTTP_403_FORBIDDEN)
 
     serializer = DatabankSerializer(data=request.data)
 
     if serializer.is_valid():
         validated_data = serializer.validated_data
-        lead_category_value = validated_data.get("lead_category", None)
         databank_entry = DataBank.objects.create(
-            lead=lead,
-            follower=sales_manager,
             timestamp=timezone.now(),
-            **serializer.validated_data
+            **validated_data
         )
-        if lead_category_value:
-            LeadCategory.objects.create(
-                lead=lead,
-                category=lead_category_value
-            )
+
+        # Create a LeadDataFollower entry
+        LeadDataFollower.objects.create(
+            lead=databank_entry,
+            follower=sales_manager
+        )
+        
         return Response({"success": "Data stored successfully", "id": databank_entry.id}, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

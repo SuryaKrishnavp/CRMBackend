@@ -11,7 +11,7 @@ from .views import (get_lead_data,store_data_into_db,
 
 
 urlpatterns = [
-    path("datacollection/<int:lead_id>/", store_data_into_db , name="store_data_into_db"),
+    path("datacollection/", store_data_into_db , name="store_data_into_db"),
     path('get_lead_data/<int:lead_id>/',get_lead_data,name="get_lead_data"),
     path('editdata_Databank/<int:databank_id>/',update_databank,name="updatedatabank"),
     path('delete_databank_entry/<int:databank_id>/',delete_databank,name="delete_databank"),
